@@ -1,0 +1,89 @@
+Random shutdowns after using thunderbolt
+https://www.ifixit.com/Answers/View/433516/MacBook+Pro+Shuts+down+randomly
+
+POSTED: 10/13/2017
+MacBook Pro Shuts down randomly
+Two days ago I wanted to continue with my video project on my MacBook Pro. I opened it (I don't shut it down) and it was off. I thought maybe the battery was dead and I didn't charge it.
+
+So, when I put my MacBook in the charger and click the on button it went on for 5 sec and then turned off. I pushed the button again and now I could login I looked at the battery it was still 80% so I thought that's odd.
+
+Then when I logged in it shuts off again. I've tried for several times to turn it back on sometimes it didn't even turn on and sometimes it turns on and then it shuts off again after seconds.
+
+I went to a computer store but they didn't know what was going on the guy said that he couldn't find anything weird in my MacBook (software) yes of course when the guy looked at it it worked. Until it suddenly shuts down and I was like: 'Yes that's the problem!' But he had no clue. All he said was: 'send it back to apple'
+
+So another thing: I'm traveling and need my MacBook for my work (I'm a colorist and work in the film industry) I need it everyday.
+
+Maybe something important: last June I Accidentally closed my MacBook with the charger between so my display broke. I replaced it, cost me lots of money, and then after 2 months it was loose (I haven't fixed it yet, been more than one month now)
+
+I can move my display up and down for at least 1cm. I can also detach the black bar underneath the display from the display, think this used to be glued together.
+
+I don't know if this might be the problem from the MacBook shutting down randomly.
+
+Ps. Sometimes my MacBook doesn't shut off completely and the fans start making extreme noises. It's like my MacBook is frozen.
+
+Mid 2015 with Retina display
+
+2,5 years old
+Used daily
+MacOS Sierra
+UPDATE:
+I've turned it on again and clicked the D that brought me to some sort of check. It said: nothing is wrong.
+
+Now it just restarts randomly. It's better but still not 100%
+
+
+ANSWER:
+POSTED: 02/28/2018 
+The problem should be solved once you turn off buggy Thunderbolt LAN Ethernet driver. Here are the steps:
+
+1) reboot with CMD+R pressed.
+
+2) open Terminal
+
+3) sudo csrutil disable
+
+4) reboot in normal mode
+
+5) sudo mv /System/Library/Extensions/AppleThunderboltNHI.kext
+
+/System/Library/Extensions/AppleThunderboltNHI.kext.BAK
+
+6) reboot with CMD+R pressed
+
+7) csrutil enable
+
+8) reboot and forget about problem
+
+Solution has been taken from one of the forums. That's personally helped me with my mid14 macbook pro Retina 15
+
+UPD: How did I find this
+
+I have the same issue with random "silent" shutdowns. Mac randomly turned off with the screen on, fans started to work at max level. Few repair services tried to diagnose the problem but unsuccessfully. All the times diagnostics showed "all is ok, maybe battery". I have replaced the battery but issue was still there. In the 4th repair service engineer found out the issue with voltage: with some random load on computer voltage on motherboard was going down from 12V to 11,5, 11.2 or even 10V and after this macbook was crashing. The only possible solution as I was said by the service is to replace the motherboard.
+
+However, macbook was working perfectly when I connected external monitor. I have started to search through the forums and finally found people with the same problems and solution was found here: https://forums.macrumors.com/threads/hel...
+
+Good luck guys. I wish you could save your macbooks too!
+
+P.S. Another possible solution is to use the python script which you could also find by the link at the top. If I understand properly, it generates some specific load which keeps voltage at normal level. However script slightly affects on performance and battery life without plug.
+
+-------------------------------------
+OTHER INFO
+
+
+https://forums.macrumors.com/threads/help-updated-to-macos-10-12-4-mbp-randomly-shuts-off.2039446/page-4
+
+Hi guys,
+Same problem as the most of you here, MBP15 Late 2013, High Sierra, shuts down every 2-5 minutes without any reason, no hardware issues. Been in the Apple Store - they found nothing.
+After reading this thread and trying different things (only Python script works in my case ) I think I found another way without creating any additional charge on the CPU and though no additional battery loss.
+
+Here's the link where a guy basically disables most of the drivers: usb, thunderbolt etc and after that no shutdowns MacOS.
+In my case when something is connected via Thunderbolt (screen, ethernet etc) MBP doesn't shutdown at all.
+So I took from the list of the drivers only Thunderbolt related ones (which start with "AppleThunderbolt") and it runs ok !
+But obviously I want to be able to connect external displays via Thunderbolt so I started enabling one after another to see if I can find one which causes problems and I think I found it (at least in my case).
+
+So if you disable (move out of /System/Library/Extensions) AppleThunderboltNHI.kext driver then reboot. Everything runs ok, you can connect external screens via Thunderbolt.
+
+The only drawback is that Ethernet via Thunderbolt will not work.
+
+
+PS : you can't just move kext driver files from /System/Library/Extensions even if you're root. You need to disable "csrutil" (just google it)
